@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+    <meta charset="utf-8">
+    <title></title>
+</head>
+<body>
+
+
+
+
+<script src="skyneb.js"> </script>
+
+
+<script type="text/javascript">
+    window.onload = function (){
+
+        var url  = "http://localhost:8000/";
+        var connect = {
+            "subkey": "subkey",
+            "token":  "tokenabc"
+        };
+        Skyneb.connect(url,connect);
+
+        var button = document.getElementById('send')
+                .addEventListener('click',(event) => {
+                    Skyneb.publish(url,send_data);
+                })
+
+        var send_data = {
+            "pubkey": "pubkey123",
+            "subkey":"subkey",
+            "token": "tokenabc",
+            "message": "selam ben http'den geldim",
+            "channel": "erdal"
+        }
+
+
+        var client_api = "http://localhost:3000/";
+
+        var evt = new EventSource(client_api);
+        evt.onmessage = function(e) {
+            var new_data = e.data.split("_ ")
+
+                console.log(new_data[1])
+
+        }
+
+        function convert(obj) {
+            return Object.keys(obj).map(function (k) {
+                return encodeURIComponent(k) + '=' + encodeURIComponent(obj[k]);
+            }).join('&');
+        }
+
+    }
+
+
+
+</script>
+<button id="send">Send Demo</button>
+
+</body>
+</html>
